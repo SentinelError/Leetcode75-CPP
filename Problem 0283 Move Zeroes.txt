@@ -1,0 +1,110 @@
+Optimized Solution (Based of Algorithm):
+
+Version 1 :
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n = nums.size(); // Step 1: Find length of array
+        vector<int> result; // New array to store non-zero numbers
+        
+        // Step 2: Iterate through array
+        for (int i = 0; i < n; ++i) {
+            // Step 3: If it is a non-zero number, move it to a new int array and delete it from the current array
+            if (nums[i] != 0) {
+                result.push_back(nums[i]);
+            }
+        }
+        
+        // Step 4: Else move the zero to the back of the current array
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 0) {
+                result.push_back(0);
+            }
+        }
+        
+        // Print the result array
+        cout << "[";
+        for (int i = 0; i < result.size(); ++i) {
+            cout << result[i];
+            if (i != result.size() - 1) {
+                cout << ",";
+            }
+        }
+        cout << "]";        
+    }
+};
+
+Notes :
+While the STDOUT of the above provides the expected outcome, it will still show an error for some reason, so I managed to get a version 2 that fixes this.
+
+Version 2 :
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n = nums.size();
+        int nonZeroCount = 0;
+
+        // Step 1: Move all non-zero elements to the front
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] != 0) {
+                nums[nonZeroCount++] = nums[i];
+            }
+        }
+
+        
+        for (int i = nonZeroCount; i < n; ++i) {
+            nums[i] = 0;
+        }
+
+        // Step 3: Print the modified array
+        cout << "[";
+        for (int i = 0; i < n; ++i) {
+            cout << nums[i];
+            if (i != n - 1) {
+                cout << ",";
+            }
+        }
+        cout << "]";
+    }
+
+};
+
+Notes : 
+
+This seems to pass all the test cases.
+We iterate through the input array nums and move all non-zero elements to the front, while keeping track of the count of non-zero elements using nonZeroCount.
+After moving non-zero elements, we fill the remaining elements with zeros from index nonZeroCount to the end of the array.
+Finally, we print the modified array in the required format with elements separated by commas and enclosed in square brackets.
+
+However, this code takes a whooping 43-50 ms to complete the run so I tried on final version to get the time down.
+
+Version 3 :
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        int n = nums.size();
+        int nonZeroCount = 0;
+
+        // Step 1: Move all non-zero elements to the front
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] != 0) {
+                swap(nums[nonZeroCount++], nums[i]); // Swap non-zero element with the first zero element found
+            }
+        }
+
+        // No need to fill remaining elements with zeros, as they are already zeros
+        // Printing the modified array
+        cout << "[";
+        for (int i = 0; i < n; ++i) {
+            cout << nums[i];
+            if (i != n - 1) {
+                cout << ",";
+            }
+        }
+        cout << "]";
+    }
+};
+
+This got it down to 33 ms, but I can't get it lower. If any of you have changes that can bring the time down, I would love to know.

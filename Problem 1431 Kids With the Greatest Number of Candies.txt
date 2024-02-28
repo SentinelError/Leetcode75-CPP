@@ -1,0 +1,112 @@
+Fist Solution (Wrong) : 
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        int run = sizeof(candies);
+        int max = candies[0];
+        int sum;
+        int i;
+        bool result;
+
+        for(i=0;i<run;i++)
+        {
+            if (candies[i]>max)
+            {
+                max = candies[i];
+            }
+        }
+        for(i=0;i<run;i++)
+        {
+            sum = candies[i] + extraCandies;
+            if(sum > max)
+            {
+               result = 1;
+            }
+            else
+            {
+                result = 0;
+            }
+        }
+        return result;
+    }
+};
+
+Issues : 
+Finding the length of the vector: You're using sizeof(candies) to find the length of the vector candies. However, sizeof returns the size of the entire vector object in bytes, not the number of elements in the vector. To get the number of elements in the vector, you should use candies.size().
+
+Returning a single boolean value instead of a vector: Your function is declared to return a vector<bool>, but you're trying to return a single boolean value (result). Instead, you should create a vector of boolean values and update it accordingly based on whether each kid can have the maximum candies or not.
+
+Incorrect logic for updating boolean vector: In your second loop, you're updating the result variable in each iteration, which will only keep the result of the last iteration. Instead, you should update the boolean vector based on whether each kid can have the maximum candies or not.
+
+Optimized Solution Ver 1 [5 ms] :
+
+#include <vector>
+
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        // Initialize the maximum number of candies
+        int max = candies[0];
+        int n = candies.size(); // Get the size of the candies vector
+        vector<bool> result(n); // Create a vector to store the result
+
+        // Find the maximum number of candies
+        for (int i = 1; i < n; ++i) {
+            if (candies[i] > max) {
+                max = candies[i];
+            }
+        }
+
+        // Check if each kid can have the maximum candies after receiving extra candies
+        for (int i = 0; i < n; ++i) {
+            if (candies[i] + extraCandies >= max) {
+                result[i] = true; // Set the result to true if the kid can have the maximum candies
+            } else {
+                result[i] = false; // Set the result to false if the kid cannot have the maximum candies
+            }
+        }
+
+        return result; // Return the vector containing the result
+    }
+};
+
+Notes :
+We use candies.size() to get the size of the candies vector.
+We create a vector result to store the boolean values indicating whether each kid can have the maximum candies.
+We correctly update the boolean vector result based on whether each kid can have the maximum candies or not.
+Finally, we return the vector result.
+
+Optimized Solution Ver 2 [3 ms] ERROR PRONE:
+
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& candies, int extraCandies) {
+        int max = candies[0];
+        int n = candies.size();
+        vector<bool> result(n);
+
+        // Find the maximum number of candies and check if each kid can have the maximum candies
+        for (int i = 1; i < n; ++i) {
+            if (candies[i] > max) {
+                max = candies[i];
+            }
+            result[i] = (candies[i] + extraCandies >= max);
+        }
+
+        return result;
+    }
+};
+
+Notes :
+This solution while slightly faster is prone to errors. Use the Version 1
+
+we made a small optimization to reduce the time complexity of the algorithm from O(2n) to O(n), where n is the number of elements in the candies vector.
+
+Instead of iterating through the candies vector twice (once to find the maximum value and once to determine if each kid can have the maximum candies), we can do both tasks in a single pass through the candies vector.
+
+The changes :
+We combine the two loops into a single loop. While iterating through the candies vector, we simultaneously find the maximum number of candies and determine if each kid can have the maximum candies.
+We initialize max with the value of candies[0], and then iterate starting from the second element of the vector.
+We update max if we find a larger value while traversing the vector.
+We update the result vector based on whether each kid can have the maximum candies.
+This optimization reduces the time complexity of the algorithm to O(n), improving its efficiency.

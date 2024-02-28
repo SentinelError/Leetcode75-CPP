@@ -1,0 +1,69 @@
+First Solution (Correct) :
+
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int one=0, two=0;
+        string ans = word1+word2;
+        string max = word1;
+        string min = word2;
+        if (word2.size() > word1.size()) {
+            max = word2;
+            min = word1;
+        }
+        int t = min.size();
+        int i;
+        for (i = 0; i < 2 * t; i++) {
+            if (i % 2 == 0) {
+                ans[i] = word1[one];
+                one++;
+            } 
+            else
+            {
+                ans[i] = word2[two];
+                two++;
+            }
+        }
+        for (; two < max.size(); two++) {
+            ans[i] = max[two];
+            i++;
+        }
+        return ans;
+    }
+};
+
+Optimized Solution :
+
+there are few optimizations we can make to improve the performance of this code:
+
+1. Avoid unnecessary string concatenation: Instead of creating the string `ans` by concatenating `word1` and `word2`, you can directly initialize `ans` to the appropriate size and fill it while merging the characters from `word1` and `word2`. This reduces the overhead of string concatenation.
+
+2. Remove unnecessary assignments and variables: We can avoid assigning `max` and `min` by directly using `word1` and `word2` based on their sizes. This eliminates unnecessary variable assignments and comparisons.
+
+3. Minimize branching: We can merge the two loops into one to reduce the branching in the code.
+
+Here's the optimized version of the code:
+
+----------------------------------------------------------
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int len1 = word1.size();
+        int len2 = word2.size();
+        int totalLen = len1 + len2;
+        string ans(totalLen, ' ');
+        int i = 0, j = 0, k = 0;
+        while (i < len1 && j < len2) {
+            ans[k++] = word1[i++];
+            ans[k++] = word2[j++];
+        }
+        while (i < len1) {
+            ans[k++] = word1[i++];
+        }
+        while (j < len2) {
+            ans[k++] = word2[j++];
+        }
+        return ans;
+    }
+};
+----------------------------------------------------------

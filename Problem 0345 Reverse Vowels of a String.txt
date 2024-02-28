@@ -1,0 +1,64 @@
+Optimized Solution : 
+
+class Solution {
+public:
+    string reverseVowels(string s) {
+        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+        int i = 0;
+        int j = s.length() - 1;
+        
+        while (i < j) {
+            if (vowels.count(s[i]) && vowels.count(s[j])) {
+                swap(s[i++], s[j--]);
+            } else if (vowels.count(s[i])) {
+                j--;
+            } else if (vowels.count(s[j])) {
+                i++;
+            } else {
+                i++;
+                j--;
+            }
+        }
+        
+        return s; 
+    }
+};
+
+Notes : 
+The `count()` function is a method available for associative containers in C++, such as `std::unordered_set`, which is used to count the number of elements in the container that have a specific value.
+
+In the context of the provided code:
+
+---------------------------------------------------------
+if (vowels.count(s[i]) && vowels.count(s[j])) {
+    // If both s[i] and s[j] are vowels, do something
+}
+---------------------------------------------------------
+
+Here's how `count()` works:
+
+- `vowels.count(s[i])`: This statement checks if the character `s[i]` is present in the `vowels` set. If it is present, it returns `1`, indicating that the character is a vowel. If it is not present, it returns `0`, indicating that the character is not a vowel.
+- `vowels.count(s[j])`: Similarly, this statement checks if the character `s[j]` is present in the `vowels` set.
+
+The `&&` operator then combines the results of these two checks. If both `s[i]` and `s[j]` are vowels (i.e., both `count()` calls return `1`), the condition evaluates to `true`, and the corresponding code block is executed.
+
+In summary, the `count()` function is used here to quickly check if a character is a vowel by seeing if it exists in the `vowels` set. It simplifies the code and makes the check more concise compared to iterating over the set manually.
+
+The `count()` function is not a boolean function; it returns an integer value. 
+
+In the context of the code provided, `count()` is used to determine whether a specific element exists in the `std::unordered_set`. It returns the count of elements in the set that match the specified element. If the count is greater than zero, it means the element exists in the set; otherwise, it does not.
+
+However, in the context of the `if` condition:
+
+---------------------------------------------------------
+if (vowels.count(s[i]) && vowels.count(s[j])) {
+    // If both s[i] and s[j] are vowels, do something
+}
+---------------------------------------------------------
+
+The `count()` function is being used in a boolean context. The `if` statement evaluates to `true` if both `vowels.count(s[i])` and `vowels.count(s[j])` return non-zero values (indicating that `s[i]` and `s[j]` are vowels), and `false` otherwise.
+
+So, while `count()` itself is not a boolean function, it can be used in a boolean context, as demonstrated in the code snippet.
+
+Optimized code :
+

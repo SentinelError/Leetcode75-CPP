@@ -1,0 +1,71 @@
+First Solution (Wrong):
+
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        string max = str1;
+        string min = str2;
+        string ans = str1 + str2;
+
+        if (str1.size() < str2.size())
+        {
+            max = str2;
+            min = str1;
+        }
+
+        int len = max.size();
+        int i,j;
+        for (i=0;i<len;i++)
+        {
+            if (str1[i] == str2[i])
+            {
+                for (j=0;j<i;j++)
+                {
+                    if (str1[j]!=ans[j])
+                    {
+                        ans += str1[i];
+                    }
+                    if (ans == str2)
+                    {
+                        exit(0);
+                    }
+                }
+            }
+            if (ans == str2)
+            {
+                exit(0);
+            }
+        }
+        return ans;
+    }
+};
+
+Optimized Solution :
+
+#include <string>
+
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        if (str1 + str2 != str2 + str1) {
+            return ""; // If the concatenation of str1 and str2 is not equal to str2 and str1, then no common divisor exists
+        }
+
+        // Calculate the greatest common divisor (GCD) of the lengths of str1 and str2
+        int len = gcd(str1.size(), str2.size());
+
+        // Extract the potential common divisor from either str1 or str2
+        return str1.substr(0, len);
+    }
+
+private:
+    // Function to calculate the greatest common divisor (GCD) using Euclid's algorithm
+    int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+};

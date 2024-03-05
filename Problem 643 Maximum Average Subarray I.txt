@@ -1,0 +1,33 @@
+Optimal Solution :
+
+class Solution {
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        int sum = 0, maxsum = 0;
+        int n = nums.size();
+        int start = 0, end = k;
+        double result;
+
+        // Calculate the sum of the first 'k' elements
+        for (int i = 0; i < k; i++) {
+            sum += nums[i];
+        }
+        
+        maxsum = sum;
+
+        // Slide the window to the right
+        while (end < n) {
+            sum -= nums[start]; // Remove the element going out of the window
+            start++;
+            sum += nums[end];  // Add the element coming into the window
+            end++;
+            maxsum = max(maxsum, sum);
+        }
+        result = static_cast<double>(maxsum) / k; // Cast to double before division
+        return result;
+    }
+};
+
+Note :
+
+Make sure to cast the maxsum to double to retain precision.

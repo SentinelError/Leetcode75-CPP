@@ -1,0 +1,45 @@
+Algorithm :
+
+1. Find the total sum in one iteration
+2. Initialize the left_sum
+3. Then check if the total_sum - left_sum - num[i] = left_sum 
+	3.1 Then Pivot has been found, return pivot
+	3.2 Else, add the number to left sum and repeat for entire array
+4. Return pivot index.
+
+Solution :
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        int total_sum = 0, left_sum = 0;
+        int n = nums.size();
+        int pivot = -1;
+
+        for (int i = 0; i<n; i++)
+        {
+            total_sum += nums[i];
+        }
+
+        for (int i = 0; i<n; i++)
+        {
+            if(total_sum - left_sum - nums[i] == left_sum)
+            {
+                pivot = i;
+                break;
+            }
+            else 
+            {
+                left_sum+=nums[i];
+            }
+        }
+        return pivot;
+    }
+};
+
+Note :
+
+Make sure to add the break after finding the pivot to ensure the loop doesn't continue and eschew the final answer.
+
+An error popped up for me with the testcase : [-1,-1,-1,-1,-1,0]
+due to not adding a break statement after finding the pivot.

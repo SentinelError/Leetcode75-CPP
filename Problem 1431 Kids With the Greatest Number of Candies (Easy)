@@ -101,7 +101,6 @@ Notes :
 This solution while slightly faster is prone to errors. Use the Version 1
 
 we made a small optimization to reduce the time complexity of the algorithm from O(2n) to O(n), where n is the number of elements in the candies vector.
-
 Instead of iterating through the candies vector twice (once to find the maximum value and once to determine if each kid can have the maximum candies), we can do both tasks in a single pass through the candies vector.
 
 The changes :

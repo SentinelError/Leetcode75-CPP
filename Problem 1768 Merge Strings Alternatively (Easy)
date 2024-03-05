@@ -44,7 +44,7 @@ there are few optimizations we can make to improve the performance of this code:
 
 Here's the optimized version of the code:
 
-----------------------------------------------------------
+---------------------------------------------------------
 class Solution {
 public:
     string mergeAlternately(string word1, string word2) {
@@ -66,4 +66,4 @@ public:
         return ans;
     }
 };
-----------------------------------------------------------
+---------------------------------------------------------

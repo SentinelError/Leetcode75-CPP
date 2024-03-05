@@ -3,6 +3,7 @@ This repository contains the notes made while attempting the 75 questions of the
 
 I attempt the questions in the following manner :
 1. I formulate an algorithm on paper and then convert that into code by my self
+
    1.5 Most Algorithms attempt through a basic brute force before I attempt to optimize it
 2. I then check the solutions and learn my mistakes and what other users have utilized
 3. I check online for other answers

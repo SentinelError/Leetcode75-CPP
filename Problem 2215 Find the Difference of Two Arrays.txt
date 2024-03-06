@@ -1,0 +1,66 @@
+Solution :
+
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        unordered_set<int> set_nums1(nums1.begin(), nums1.end());
+        unordered_set<int> set_nums2(nums2.begin(), nums2.end());
+        unordered_set<int> duplicates1;
+        unordered_set<int> duplicates2;
+
+        vector<int> distinct_in_nums1;
+        vector<int> distinct_in_nums2;
+
+        for (int num : nums1) {
+            if (set_nums2.find(num) == set_nums2.end() && duplicates1.find(num) == duplicates1.end()) {
+                distinct_in_nums1.push_back(num);
+            }
+            duplicates1.insert(num);
+        }
+
+        for (int num : nums2) {
+            if (set_nums1.find(num) == set_nums1.end() && duplicates2.find(num) == duplicates2.end()) {
+                distinct_in_nums2.push_back(num);
+            }
+            duplicates2.insert(num);
+        }
+
+        return {distinct_in_nums1, distinct_in_nums2};
+    }
+};
+
+Notes : 
+
+This took me searching and about an hour in understanding and GPT before I finally got a code that ran. It is not efficient but it passes all test cases in an average manner. The description for the code :
+
+Absolutely, let's break down the provided code step by step:
+
+1. Class Definition:
+    - `class Solution { ... };`: This declares a class named `Solution`. Within this class, we define a member function `findDifference` which takes two vectors of integers (`nums1` and `nums2`) as input and returns a vector of vectors of integers (which contains the distinct elements in `nums1` not present in `nums2`, and vice versa).
+
+2. Declaring Sets:
+    - `unordered_set<int> set_nums1(nums1.begin(), nums1.end());`: This line initializes an unordered set `set_nums1` using the range constructor. It initializes the set with the elements from the vector `nums1`.
+    - `unordered_set<int> set_nums2(nums2.begin(), nums2.end());`: Similarly, this line initializes another unordered set `set_nums2` with the elements from the vector `nums2`.
+
+3. Declaring Sets for Duplicates:
+    - `unordered_set<int> duplicates1;`: This declares an empty unordered set `duplicates1` to store duplicates encountered in `nums1`.
+    - `unordered_set<int> duplicates2;`: Similarly, this declares an empty unordered set `duplicates2` to store duplicates encountered in `nums2`.
+
+4. Declaring Result Vectors:
+    - `vector<int> distinct_in_nums1;`: This declares an empty vector `distinct_in_nums1` to store distinct integers in `nums1` that are not present in `nums2`.
+    - `vector<int> distinct_in_nums2;`: Similarly, this declares an empty vector `distinct_in_nums2` to store distinct integers in `nums2` that are not present in `nums1`.
+
+5. Iterating Over `nums1`:
+    - `for (int num : nums1) { ... }`: This loop iterates over each element `num` in the vector `nums1`.
+    - `if (set_nums2.find(num) == set_nums2.end() && duplicates1.find(num) == duplicates1.end()) { ... }`: This condition checks if `num` is not present in `set_nums2` (indicating it's not in `nums2`) and if it's not a duplicate (not present in `duplicates1`).
+    - `distinct_in_nums1.push_back(num);`: If the above condition is true, `num` is added to the vector `distinct_in_nums1`.
+    - `duplicates1.insert(num);`: Regardless of whether `num` is added to `distinct_in_nums1`, it's inserted into `duplicates1` to keep track of duplicates.
+
+6. Iterating Over `nums2`:
+    - Similar to the above, this loop iterates over each element `num` in the vector `nums2`.
+    - It checks if `num` is not present in `set_nums1` (indicating it's not in `nums1`) and if it's not a duplicate (not present in `duplicates2`).
+    - If both conditions are true, `num` is added to the vector `distinct_in_nums2`.
+    - `num` is then inserted into `duplicates2` to keep track of duplicates.
+
+7. Returning the Result:
+    - Finally, the function returns a vector containing two vectors: `distinct_in_nums1` and `distinct_in_nums2`. These vectors contain the distinct elements in `nums1` and `nums2` respectively, which are not present in the other array.

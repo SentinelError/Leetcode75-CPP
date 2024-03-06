@@ -1,0 +1,65 @@
+Solution :
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+
+        unordered_map<int, int> countMap;
+
+        for (int num : arr)
+        {
+            countMap[num]++;
+        }
+
+        unordered_set<int> uniqueValue;
+        for (const auto& pair : countMap) 
+        {
+            if(!uniqueValue.insert(pair.second).second)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+Notes : 
+
+1. Include Directives:
+    - The code includes three header files: `<vector>`, `<unordered_map>`, and `<unordered_set>`. These headers provide access to the standard library classes `std::vector`, `std::unordered_map`, and `std::unordered_set`, which are used in the code.
+
+2. Solution Class:
+    - The code defines a class named `Solution`.
+
+3. uniqueOccurrences Function:
+    - Inside the `Solution` class, there is a member function named `uniqueOccurrences`. This function takes a reference to a vector of integers `arr` as input and returns a boolean value (`true` if the number of occurrences of each value in the array is unique, and `false` otherwise).
+
+4. Counting Occurrences:
+    - The function initializes an unordered map named `countMap` to store the count of occurrences of each element in the array.
+    - It then iterates through each element `num` in the input array `arr`.
+    - For each element, it increments the corresponding count in the `countMap` using the `operator[]`.
+
+5. Checking Unique Counts:
+    - After counting the occurrences of each element, the function checks if the counts themselves are unique.
+    - It initializes an unordered set named `uniqueCounts` to keep track of unique counts encountered.
+    - It iterates through each key-value pair in the `countMap`.
+    - For each pair, it attempts to insert the count (`pair.second`) into the `uniqueCounts` set using the `insert` function.
+    - If the insertion is unsuccessful (meaning the count was already present in the set), it indicates a duplicate count, and the function returns `false`.
+    - If the insertion is successful (meaning the count was not already present in the set), it continues iterating over the counts.
+    - If all counts are unique and no duplicates are found, the function returns `true` at the end.
+
+`std::unordered_map` and `std::unordered_set` are both unordered associative containers provided by the C++ Standard Library. They have similar interfaces but serve different purposes:
+
+1.`std::unordered_map`:
+    - It is an associative container that stores elements formed by a combination of a key and a value, and provides fast retrieval of values based on keys.
+    - Each element in an unordered map is stored as a key-value pair, where each key is unique within the map.
+    - Keys are used to access the associated values, and the keys are hashed to determine the storage location of the corresponding values.
+    - Example: Storing counts of elements, implementing a dictionary, etc.
+
+2.`std::unordered_set`:
+    - It is an associative container that stores a collection of unique elements and provides fast lookup of elements based on their values.
+    - Unlike a map, it stores only keys (or values) without any associated values.
+    - Elements in an unordered set are stored based on their hash value, and duplicates are not allowed.
+    - Example: Storing a collection of unique IDs, implementing a set of unique elements, etc.
+
+In summary, `unordered_map` is used to store key-value pairs where fast lookup based on keys is required, while `unordered_set` is used to store a collection of unique elements where only fast membership testing is needed. Both containers use hash-based data structures internally for efficient element retrieval.

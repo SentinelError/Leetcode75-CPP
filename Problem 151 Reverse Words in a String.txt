@@ -1,0 +1,85 @@
+Solution :
+
+#include <string>
+#include <sstream>
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        int left = 0, right = s.length() - 1;
+        while (left <= right && s[left] == ' ') {
+            left++;
+        }
+        while (left <= right && s[right] == ' ') {
+            right--;
+        }
+
+
+        reverseString(s, left, right);
+
+
+        int start = left;
+        for (int i = left; i <= right; ++i) {
+            if (s[i] == ' ') {
+                reverseString(s, start, i - 1);
+                start = i + 1;
+            }
+        }
+        reverseString(s, start, right);
+
+        
+        istringstream iss(s.substr(left, right - left + 1));
+        ostringstream oss;
+        string word;
+        bool firstWord = true;
+        while (iss >> word) {
+            if (!firstWord) {
+                oss << ' ';
+            }
+            oss << word;
+            firstWord = false;
+        }
+        return oss.str();
+    }
+
+private:
+    void reverseString(string& s, int left, int right) {
+        while (left < right) {
+            swap(s[left++], s[right--]);
+        }
+    }
+};
+
+Notes :
+
+1. Include Directives:
+    - The code includes two header files: `<string>` and `<sstream>`. These headers provide access to the standard library classes `std::string`, `std::istringstream`, and `std::ostringstream`.
+
+2. Solution Class:
+    - The code defines a class named `Solution`.
+
+3. reverseWords Function:
+    - Inside the `Solution` class, there is a member function named `reverseWords`. This function takes a string `s` as input and returns a modified string after reversing the order of words.
+
+4. Trimming Spaces:
+    - The function trims leading and trailing spaces from the input string `s`. It initializes two integer variables `left` and `right` to track the indices of the leftmost and rightmost non-space characters.
+    - It then increments `left` until it reaches a non-space character from the left side of the string and decrements `right` until it reaches a non-space character from the right side of the string.
+
+5. Reverse the Entire String:
+    - After trimming spaces, the function calls a helper function `reverseString` to reverse the entire string `s` between indices `left` and `right`.
+
+6. Reverse Each Individual Word:
+    - The function then iterates through the string to reverse each individual word.
+    - It initializes an integer variable `start` to track the start index of each word.
+    - It iterates through the string and when encountering a space character, it calls the `reverseString` function to reverse the word between indices `start` and `i-1`.
+    - It updates the `start` index to the position immediately after the space.
+
+7. Constructing the Result:
+    - After reversing each word, the function constructs the final result by removing extra spaces.
+    - It creates an `istringstream` from the substring of `s` between `left` and `right` to extract words separated by spaces.
+    - It uses an `ostringstream` to construct the final result string by appending words with a single space between them.
+    - Finally, it returns the result string.
+
+8. Helper Function reverseString:
+    - This function takes a string `s` and two integer indices `left` and `right`.
+    - It reverses the substring of `s` between indices `left` and `right` using the two-pointer technique.
